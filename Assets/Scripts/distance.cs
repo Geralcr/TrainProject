@@ -21,6 +21,8 @@ public class distance : MonoBehaviour
     private float timeX = 0;
     private float timeZ = 0;
 
+    //Chancha hace matriz,PERO RAPIDO
+
 
     void Start()
     {
