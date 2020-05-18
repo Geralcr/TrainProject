@@ -2,34 +2,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class distance : MonoBehaviour
 {
     public GameObject firstObject;
     public GameObject secondObject;
 
-    public Transform transformFirstObject;
-    public Transform transformSecondtObject;
+    Transform transformFirstObject;
+    Transform transformSecondtObject;
 
-    private Vector3 positionFirstObject;
+    private Vector3 positionFirstObjectRouter;
     private Vector3 positionSecondObject;
     private float distanceObjs;
 
-    public float distanceX = 5;
-    public float distanceZ = 10;
+    public int distanceX = 5;
+    public int distanceZ = 10;
 
     private float timeX = 0;
-    private float timeZ = 0;
+    private int posZ = 0;
+
+    public string[,] dataMatrix;
+
+    string path;
 
     //Chancha hace matriz,PERO RAPIDO
 
 
     void Start()
     {
+        dataMatrix = new string[distanceZ + 1, distanceX + 1];
         firstObject = GameObject.FindWithTag("Router");
         secondObject = GameObject.FindWithTag("Floor");
         transformFirstObject = firstObject.GetComponent<Transform>();
         transformSecondtObject = secondObject.GetComponent<Transform>();
+        positionFirstObjectRouter = transformFirstObject.position;
 
         // for (int i = 0; i < distanceZ; i++)
         // {
@@ -40,6 +47,11 @@ public class distance : MonoBehaviour
         //     }
         // }
 
+          //Get the path of the Game data folder
+        path = Application.dataPath + "/Data.txt";
+        File.WriteAllText(path,"Datos matrices");
+        File.AppendAllText(path,"\nEstado   Posicion  Distancia");
+
     }
 
     void Update()
@@ -48,21 +60,30 @@ public class distance : MonoBehaviour
         //timeZ += Time.deltaTime;
         //transformSecondtObject.position = new Vector3(timeX, 0, -timeZ);
 
+
         if (timeX < distanceX)
         {
-            int aux = Convert.ToInt32(timeX);
-            transformSecondtObject.position = new Vector3( aux, 0.5f , -timeZ);
+            if (posZ < distanceZ)
+            {
 
-        }else
+                int posX = Convert.ToInt32(timeX);
+
+                transformSecondtObject.position = new Vector3(posX, 0.5f, -posZ);
+                positionSecondObject = transformSecondtObject.position;
+                distanceObjs = Vector3.Distance(positionFirstObjectRouter, positionSecondObject);
+
+                dataMatrix[posZ, posX] = distanceObjs.ToString();
+                //Debug.Log($"fila = {timeX} se pasa a {posX}");
+                //Debug.Log($"columna = {posZ}");
+                Debug.Log($"{posZ},{posX} = {dataMatrix[posZ, posX]}");
+            }
+
+        }
+        else
         {
-            timeZ++;
+            posZ++;
             timeX = 0;
-        } 
-
-        positionFirstObject = transformFirstObject.position;
-        positionSecondObject = transformSecondtObject.position;
-        distanceObjs = Vector3.Distance(positionFirstObject, positionSecondObject);
-        Debug.Log(distanceObjs);
+        }
 
     }
 }
