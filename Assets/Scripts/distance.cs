@@ -38,53 +38,57 @@ public class distance : MonoBehaviour
         transformSecondtObject = secondObject.GetComponent<Transform>();
         positionFirstObjectRouter = transformFirstObject.position;
 
-        // for (int i = 0; i < distanceZ; i++)
-        // {
-        //     for (int j = 0; j < distanceX; j++)
-        //     {
-        //         Debug.Log(i + "," + j);
-        //         transformSecondtObject.position = new Vector3(j, 0, -i);
-        //     }
-        // }
-
-          //Get the path of the Game data folder
         path = Application.dataPath + "/Data.txt";
-        File.WriteAllText(path,"Datos matrices");
-        File.AppendAllText(path,"\nEstado   Posicion  Distancia");
+        File.WriteAllText(path, "Datos matrices");
+        File.AppendAllText(path, "\nEstado   Posicion  Distancia\n");
+
+        for (int i = 0; i < distanceZ; i++)
+        {
+            File.AppendAllText(path,$"\n");
+
+            for (int j = 0; j < distanceX; j++)
+            {
+                transformSecondtObject.position = new Vector3(j, 0.5f, -i);
+                positionSecondObject = transformSecondtObject.position;
+                distanceObjs = Vector3.Distance(positionFirstObjectRouter, positionSecondObject);
+
+                dataMatrix[i, j] = distanceObjs.ToString();
+                Debug.Log($"{i},{j} = {dataMatrix[i, j]}");
+                File.AppendAllText(path, $" [ {i},{j} | {0} | {dataMatrix[i, j]}]");
+            }
+        }
 
     }
 
     void Update()
     {
-        timeX += Time.deltaTime;
-        //timeZ += Time.deltaTime;
-        //transformSecondtObject.position = new Vector3(timeX, 0, -timeZ);
+        //     timeX += Time.deltaTime;
+        //     //timeZ += Time.deltaTime;
+        //     //transformSecondtObject.position = new Vector3(timeX, 0, -timeZ);
 
 
-        if (timeX < distanceX)
-        {
-            if (posZ < distanceZ)
-            {
+        //     if (timeX < distanceX)
+        //     {
+        //         if (posZ < distanceZ)
+        //         {
 
-                int posX = Convert.ToInt32(timeX);
+        //             int posX = Convert.ToInt32(timeX);
 
-                transformSecondtObject.position = new Vector3(posX, 0.5f, -posZ);
-                positionSecondObject = transformSecondtObject.position;
-                distanceObjs = Vector3.Distance(positionFirstObjectRouter, positionSecondObject);
+        //             transformSecondtObject.position = new Vector3(posX, 0.5f, -posZ);
+        //             positionSecondObject = transformSecondtObject.position;
+        //             distanceObjs = Vector3.Distance(positionFirstObjectRouter, positionSecondObject);
 
-                dataMatrix[posZ, posX] = distanceObjs.ToString();
-                //Debug.Log($"fila = {timeX} se pasa a {posX}");
-                //Debug.Log($"columna = {posZ}");
-                Debug.Log($"{posZ},{posX} = {dataMatrix[posZ, posX]}");
-                File.AppendAllText(path,$"\n  0       {posZ},{posX}       {dataMatrix[posZ, posX]}\n");
-            }
+        //             dataMatrix[posZ, posX] = distanceObjs.ToString();
+        //             Debug.Log($"{posZ},{posX} = {dataMatrix[posZ, posX]}");
+        //             File.AppendAllText(path, $"\n  0       {posZ},{posX}       {dataMatrix[posZ, posX]}\n");
+        //         }
 
-        }
-        else
-        {
-            posZ++;
-            timeX = 0;
-        }
-
+        //     }
+        //     else
+        //     {
+        //         posZ++;
+        //         timeX = 0;
+        //     }
+        // }
     }
 }
