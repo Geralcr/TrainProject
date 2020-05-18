@@ -76,6 +76,7 @@ public class distance : MonoBehaviour
                 //Debug.Log($"fila = {timeX} se pasa a {posX}");
                 //Debug.Log($"columna = {posZ}");
                 Debug.Log($"{posZ},{posX} = {dataMatrix[posZ, posX]}");
+                File.AppendAllText(path,$"\n  0       {posZ},{posX}       {dataMatrix[posZ, posX]}\n");
             }
 
         }
