@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Router
   - Floor
+  - objetivo
+  - Obstacle
   layers:
   - Default
   - TransparentFX

@@ -14,7 +14,7 @@ public class distance : MonoBehaviour
 
     private Vector3 positionFirstObjectRouter;
     private Vector3 positionSecondObject;
-    private float distanceObjs;
+    private double distanceObjs;
 
     public int distanceX = 5;
     public int distanceZ = 10;
@@ -31,6 +31,7 @@ public class distance : MonoBehaviour
 
     void Start()
     {
+
         dataMatrix = new string[distanceZ + 1, distanceX + 1];
         firstObject = GameObject.FindWithTag("Router");
         secondObject = GameObject.FindWithTag("Floor");
@@ -40,7 +41,7 @@ public class distance : MonoBehaviour
 
         path = Application.dataPath + "/Data.txt";
         File.WriteAllText(path, "Datos matrices");
-        File.AppendAllText(path, "\nEstado   Posicion  Distancia\n");
+        File.AppendAllText(path, "\n Posicion | Estado | Distancia\n");
 
         for (int i = 0; i < distanceZ; i++)
         {
@@ -51,10 +52,10 @@ public class distance : MonoBehaviour
                 transformSecondtObject.position = new Vector3(j, 0.5f, -i);
                 positionSecondObject = transformSecondtObject.position;
                 distanceObjs = Vector3.Distance(positionFirstObjectRouter, positionSecondObject);
-
-                dataMatrix[i, j] = distanceObjs.ToString();
+                //distanceObjs = Math.Round(distanceObjs,2);
+                dataMatrix[i, j] = distanceObjs.ToString("N2");
                 Debug.Log($"{i},{j} = {dataMatrix[i, j]}");
-                File.AppendAllText(path, $" [ {i},{j} | {0} | {dataMatrix[i, j]}]");
+                File.AppendAllText(path, $"  [ {i},{j} | {0} | {dataMatrix[i, j]}]  ");
             }
         }
 
