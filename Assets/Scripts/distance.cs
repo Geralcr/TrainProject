@@ -6,6 +6,7 @@ using System.IO;
 
 public class distance : MonoBehaviour
 {
+    public string fileName;
     private GameObject firstObjectRouter;
     private GameObject secondObject;
 
@@ -46,7 +47,7 @@ public class distance : MonoBehaviour
 
         positionFirstObjectRouter = transformFirstObjectRouter.position;
 
-        path = Application.dataPath + "/Data.txt";
+        path = Application.dataPath + "/"+fileName+".txt";
         File.WriteAllText(path, "Datos matrices");
         File.AppendAllText(path, "\n Posicion | Estado | Distancia\n");
 
