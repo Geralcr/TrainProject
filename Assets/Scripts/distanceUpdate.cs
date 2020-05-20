@@ -40,7 +40,9 @@ public class distanceUpdate : MonoBehaviour
     {
         cellLength = trainLength / row;
         cellWidth = trainWidth / column;
-    
+        
+        offSetZ = cellLength / 2;
+        offSetX = cellWidth / 2;
 
         dataMatrix = new string[row + 1, column + 1];
 

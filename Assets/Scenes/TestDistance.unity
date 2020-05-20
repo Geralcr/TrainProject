@@ -297,8 +297,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719022066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_LocalPosition: {x: 2, y: 0, z: -10}
+  m_LocalScale: {x: 0.4, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -313,6 +313,7 @@ GameObject:
   m_Component:
   - component: {fileID: 779339329}
   - component: {fileID: 779339328}
+  - component: {fileID: 779339330}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -327,17 +328,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779339327}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c542379d0a4a6b441ab1975ebd64abf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstObject: {fileID: 0}
-  secondObject: {fileID: 0}
-  transformFirstObject: {fileID: 0}
-  transformSecondtObject: {fileID: 0}
-  distanceX: 5
-  distanceZ: 10
+  row: 200
+  column: 8
+  trainWidth: 3.4
+  trainLength: 87.2
 --- !u!4 &779339329
 Transform:
   m_ObjectHideFlags: 0
@@ -352,6 +351,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &779339330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779339327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5da677f281c02148aee3689acf3baa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstObject: {fileID: 0}
+  secondObject: {fileID: 0}
+  row: 4
+  column: 4
+  trainWidth: 4
+  trainLength: 4
+  offSetX: 0
+  offSetZ: 0
 --- !u!1 &892641375
 GameObject:
   m_ObjectHideFlags: 0

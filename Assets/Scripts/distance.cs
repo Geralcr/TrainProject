@@ -29,9 +29,13 @@ public class distance : MonoBehaviour
     private float cellWidth;
     private float cellLength;
 
+    private float offSetX = 0f;
+    private float offSetZ = 0f;
+
 
     void Start()
     {
+
         dataMatrix = new string[row + 1, column + 1];
 
         firstObjectRouter = GameObject.FindWithTag("Router");
@@ -48,8 +52,11 @@ public class distance : MonoBehaviour
 
         cellLength = trainLength / row;
         cellWidth = trainWidth / column;
+        
+        offSetZ = cellLength / 2;
+        offSetX = cellWidth / 2;
 
-        Debug.Log($"{cellLength}{cellWidth}");
+        //Debug.Log($"{cellLength}{cellWidth}");
 
         for (int i = 0; i < row; i++)
         {
@@ -57,7 +64,7 @@ public class distance : MonoBehaviour
 
             for (int j = 0; j < column; j++)
             {
-                transformSecondtObject.position = new Vector3(j*cellWidth, 0.5f, -i*cellLength);
+                transformSecondtObject.position = new Vector3(j * cellWidth + offSetX, 0.5f, -i * cellLength - offSetZ);
                 positionSecondObject = transformSecondtObject.position;
                 distanceObjs = Vector3.Distance(positionFirstObjectRouter, positionSecondObject);
                 dataMatrix[i, j] = distanceObjs.ToString("N2");
