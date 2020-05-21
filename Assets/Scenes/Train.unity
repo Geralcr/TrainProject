@@ -537,6 +537,7 @@ MonoBehaviour:
   trainWidth: 3.4
   trainLength: 87.2
   fileName: 
+  height: 0
 --- !u!4 &621714289
 Transform:
   m_ObjectHideFlags: 0
