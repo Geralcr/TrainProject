@@ -32,6 +32,8 @@ public class distance : MonoBehaviour
     private float offSetX = 0f;
     private float offSetZ = 0f;
 
+    public string fileName;
+
 
     void Start()
     {
@@ -46,7 +48,7 @@ public class distance : MonoBehaviour
 
         positionFirstObjectRouter = transformFirstObjectRouter.position;
 
-        path = Application.dataPath + "/Data.txt";
+        path = Application.dataPath + $"/{fileName}.txt";
         File.WriteAllText(path, "Datos matrices");
         File.AppendAllText(path, "\n Posicion | Estado | Distancia\n");
 
