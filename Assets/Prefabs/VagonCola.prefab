@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 2809445493901995706}
   m_Layer: 0
   m_Name: VagonCola
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

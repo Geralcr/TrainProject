@@ -10,7 +10,6 @@ public class distance : MonoBehaviour
 
     public Text finish;
 
-
     public GameObject Router1;
     public GameObject Router2;
     public GameObject Router3;
@@ -30,11 +29,6 @@ public class distance : MonoBehaviour
 
     public float trainWidth = 3.4f;
     public float trainLength = 87.2f;
-
-    private string[,] dataMatrixRouter1;
-    private string[,] dataMatrixRouter2;
-    private string[,] dataMatrixRouter3;
-
     string pathRouter1;
     string pathRouter2;
     string pathRouter3;
@@ -49,20 +43,25 @@ public class distance : MonoBehaviour
 
     public float height;
 
-
     private string text1 = String.Empty;
     private string text2 = String.Empty;
     private string text3 = String.Empty;
+
+    private Vector3 direccionRayCastRouter1;
+    private Vector3 direccionRayCastRouter2;
+    private Vector3 direccionRayCastRouter3;
+
+    private RaycastHit hit;
+
+    private int EstadoLineaVista;
 
     void Start()
     {
 
     }
 
-    public void  EjecutarCalculos()
+    public void EjecutarCalculos()
     {
-        Debug.Log("Inició");
-
         HandleInitial();
 
         cellLength = CalcularTamCelda(trainWidth, trainLength).Length;
@@ -70,13 +69,10 @@ public class distance : MonoBehaviour
 
         offSetZ = cellLength / 2;
         offSetX = cellWidth / 2;
-
         RecorrerMatriz();
-
         WriteAllText();
 
         finish.text = "Finalizó, Revise los archivos con los datos";
-        Debug.Log("Terminó");
     }
 
     Cell CalcularTamCelda(float width, float length)
@@ -99,37 +95,39 @@ public class distance : MonoBehaviour
             for (int j = 0; j < column; j++)
             {
                 transformTragetPoint.position = new Vector3(j * cellWidth + offSetX, height, -i * cellLength - offSetZ);
+                Instantiate(targetPoint, transformTragetPoint.position, Quaternion.identity);
 
-                distanceRouter1 = Vector3.Distance(transformRouter1.position, transformTragetPoint.position);
-                dataMatrixRouter1[i, j] = distanceRouter1.ToString("N2");
-                text1 += CreateString(i.ToString(), j.ToString(), dataMatrixRouter1[i, j]);
-
-                distanceRouter2 = Vector3.Distance(transformRouter2.position, transformTragetPoint.position);
-                dataMatrixRouter2[i, j] = distanceRouter2.ToString("N2");
-                text2 += CreateString(i.ToString(), j.ToString(), dataMatrixRouter2[i, j]);
-                
-
-                distanceRouter3 = Vector3.Distance(transformRouter3.position, transformTragetPoint.position);
-                dataMatrixRouter3[i, j] = distanceRouter3.ToString("N2");
-                text3 += CreateString(i.ToString(), j.ToString(), dataMatrixRouter3[i, j]);
-
+                text1 += HandleMain(transformTragetPoint.position, transformRouter1.position, i, j);
+                text2 += HandleMain(transformTragetPoint.position, transformRouter2.position, i, j);
+                text3 += HandleMain(transformTragetPoint.position, transformRouter3.position, i, j);
             }
         }
-
     }
 
-    void WriteAllText() {
+    string HandleMain(Vector3 targetPos, Vector3 routerPos, int rowIndex, int columIndex)
+    {
+        int LOS = 0;
+        Vector3 rayDireccion = targetPos - routerPos;
+        if (Physics.Raycast(routerPos, rayDireccion, out hit))
+        {
+            LOS = hit.transform.tag == "Target" ? 1 : 0;
+        }
+        float distance = Vector3.Distance(routerPos, targetPos);
+        return CreateString(rowIndex.ToString(), columIndex.ToString(), distance.ToString("N2"), LOS);
+    }
+
+    void WriteAllText()
+    {
         File.AppendAllText(pathRouter1, text1);
         File.AppendAllText(pathRouter2, text2);
         File.AppendAllText(pathRouter3, text3);
-
     }
 
-    string CreateString(string i, string j, string distance)
+    string CreateString(string i, string j, string distance, int status)
     {
         int size1 = 3 - i.Length;
         int size2 = 5 - distance.Length;
-        return $"  [ {i},{j}{ GetSpaces(size1)} | {0} | {distance}{GetSpaces(size2) }]  ";
+        return $"  [ {i},{j}{ GetSpaces(size1)} | {status} | {distance}{GetSpaces(size2) }]  ";
     }
 
     private string GetSpaces(int totalLength)
@@ -139,10 +137,6 @@ public class distance : MonoBehaviour
 
     void HandleInitial()
     {
-        dataMatrixRouter1 = new string[row + 1, column + 1];
-        dataMatrixRouter2 = new string[row + 1, column + 1];
-        dataMatrixRouter3 = new string[row + 1, column + 1];
-
         transformRouter1 = Router1.GetComponent<Transform>();
         transformRouter2 = Router2.GetComponent<Transform>();
         transformRouter3 = Router3.GetComponent<Transform>();

@@ -499,9 +499,10 @@ GameObject:
   - component: {fileID: 6025452183390249249}
   - component: {fileID: 5621349981798177305}
   - component: {fileID: 8806453312700684636}
+  - component: {fileID: 5135092649356664952}
   m_Layer: 0
   m_Name: Mesh395
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -568,6 +569,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &5135092649356664952
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453537381367911543}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.717288, y: 1.8457195, z: 0.07875061}
+  m_Center: {x: -1.518418, y: 2.4204803, z: 10.891543}
 --- !u!1 &1581202869539120486
 GameObject:
   m_ObjectHideFlags: 0
@@ -2368,9 +2382,10 @@ GameObject:
   - component: {fileID: 7471148749478618905}
   - component: {fileID: 2879234239137504796}
   - component: {fileID: 3953083301173056551}
+  - component: {fileID: 8616353407888491275}
   m_Layer: 0
   m_Name: Mesh379
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2437,6 +2452,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8616353407888491275
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6934475581997941788}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.717288, y: 1.8457195, z: 0.07874966}
+  m_Center: {x: -1.518418, y: 2.4204803, z: 11.011543}
 --- !u!1 &7342036663431031687
 GameObject:
   m_ObjectHideFlags: 0
