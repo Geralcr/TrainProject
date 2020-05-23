@@ -2,82 +2,142 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 
 public class distance : MonoBehaviour
 {
-    public string fileName;
-    private GameObject firstObjectRouter;
-    private GameObject secondObject;
+    #region  Variables
+    public Text finish;
 
-    private Transform transformFirstObjectRouter;
-    private Transform transformSecondtObject;
+    public GameObject Router1;
+    public GameObject Router2;
+    public GameObject Router3;
+    public GameObject targetPoint;
 
-    private Vector3 positionFirstObjectRouter;
-    private Vector3 positionSecondObject;
-    private double distanceObjs;
+    private Transform transformRouter1;
+    private Transform transformRouter2;
+    private Transform transformRouter3;
+    private Transform transformTragetPoint;
 
     public int row = 200;
     public int column = 8;
 
     public float trainWidth = 3.4f;
     public float trainLength = 87.2f;
-
-    private string[,] dataMatrix;
-
-    string path;
-
-    private float cellWidth;
-    private float cellLength;
+    string pathRouter1;
+    string pathRouter2;
+    string pathRouter3;
 
     private float offSetX = 0f;
     private float offSetZ = 0f;
 
+    public string fileName;
 
-    void Start()
+    private float cellWidth;
+    private float cellLength;
+
+    public float height;
+
+    private string text1 = String.Empty;
+    private string text2 = String.Empty;
+    private string text3 = String.Empty;
+
+    private RaycastHit hit;
+
+    #endregion
+
+
+    public void EjecutarCalculos()
     {
+        HandleInitial();
 
-        dataMatrix = new string[row + 1, column + 1];
+        cellLength = CalcularTamCelda(trainWidth, trainLength).Length;
+        cellWidth = CalcularTamCelda(trainWidth, trainLength).Width;
 
-        firstObjectRouter = GameObject.FindWithTag("Router");
-        secondObject = GameObject.FindWithTag("Floor");
-
-        transformFirstObjectRouter = firstObjectRouter.GetComponent<Transform>();
-        transformSecondtObject = secondObject.GetComponent<Transform>();
-
-        positionFirstObjectRouter = transformFirstObjectRouter.position;
-
-        path = Application.dataPath + "/"+fileName+".txt";
-        File.WriteAllText(path, "Datos matrices");
-        File.AppendAllText(path, "\n Posicion | Estado | Distancia\n");
-
-        cellLength = trainLength / row;
-        cellWidth = trainWidth / column;
-        
         offSetZ = cellLength / 2;
         offSetX = cellWidth / 2;
+        RecorrerMatriz();
+        WriteAllText();
 
-        //Debug.Log($"{cellLength}{cellWidth}");
+        finish.text = "Finalizó, Revise los archivos con los datos";
+    }
 
+    Cell CalcularTamCelda(float width, float length)
+    {
+        Cell CellSize = new Cell();
+        CellSize.Width = width / column;
+        CellSize.Length = length / row;
+        return CellSize;
+    }
+
+    void RecorrerMatriz()
+    {
         for (int i = 0; i < row; i++)
         {
-            File.AppendAllText(path, $"\n");
+            text1 += $"\n";
+            text2 += $"\n";
+            text3 += $"\n";
 
             for (int j = 0; j < column; j++)
             {
-                transformSecondtObject.position = new Vector3(j * cellWidth + offSetX, 0.5f, -i * cellLength - offSetZ);
-                positionSecondObject = transformSecondtObject.position;
-                distanceObjs = Vector3.Distance(positionFirstObjectRouter, positionSecondObject);
-                dataMatrix[i, j] = distanceObjs.ToString("N2");
-                //Debug.Log($"{i},{j} = {dataMatrix[i, j]}");
-                File.AppendAllText(path, $"  [ {i},{j} | {0} | {dataMatrix[i, j]}]  ");
+                transformTragetPoint.position = new Vector3(j * cellWidth + offSetX, 1.5f + height, -i * cellLength - offSetZ);
+                Instantiate(targetPoint, transformTragetPoint.position, Quaternion.identity);
+
+                text1 += HandleMain(transformTragetPoint.position, transformRouter1.position, i, j);
+                text2 += HandleMain(transformTragetPoint.position, transformRouter2.position, i, j);
+                text3 += HandleMain(transformTragetPoint.position, transformRouter3.position, i, j);
             }
         }
-
     }
 
-    void Update()
+    string HandleMain(Vector3 targetPos, Vector3 routerPos, int rowIndex, int columIndex)
     {
+        int LOS = 0;
+        Vector3 rayDireccion = targetPos - routerPos;
+        if (Physics.Raycast(routerPos, rayDireccion, out hit))
+        {
+            LOS = hit.transform.tag == "Target" ? 1 : 0;
+        }
+        float distance = Vector3.Distance(routerPos, targetPos);
+        
+        return CreateString(rowIndex.ToString(), columIndex.ToString(), distance.ToString("N2"), LOS);
+    }
 
+    void WriteAllText()
+    {
+        File.AppendAllText(pathRouter1, text1);
+        File.AppendAllText(pathRouter2, text2);
+        File.AppendAllText(pathRouter3, text3);
+    }
+
+    string CreateString(string i, string j, string distance, int status)
+    {
+        int size1 = 3 - i.Length;
+        int size2 = 5 - distance.Length;
+        return $"  [ {i},{j}{ GetSpaces(size1)} | {status} | {distance}{GetSpaces(size2) }]  ";
+    }
+
+    private string GetSpaces(int totalLength)
+    {
+        return new String((char)32, totalLength);
+    }
+
+    void HandleInitial()
+    {
+        transformRouter1 = Router1.GetComponent<Transform>();
+        transformRouter2 = Router2.GetComponent<Transform>();
+        transformRouter3 = Router3.GetComponent<Transform>();
+
+        transformTragetPoint = targetPoint.GetComponent<Transform>();
+
+        pathRouter1 = Application.dataPath + $"/{fileName}Router1.txt";
+        File.WriteAllText(pathRouter1, "Datos matrices Router #1 ");
+
+        pathRouter2 = Application.dataPath + $"/{fileName}Router2.txt";
+        File.WriteAllText(pathRouter2, "Datos matrices Router #2 ");
+
+        pathRouter3 = Application.dataPath + $"/{fileName}Router3.txt";
+        File.WriteAllText(pathRouter3, "Datos matrices Router #3 ");
     }
 }
