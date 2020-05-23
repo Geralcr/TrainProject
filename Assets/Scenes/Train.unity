@@ -911,7 +911,7 @@ MonoBehaviour:
   trainWidth: 3.4
   trainLength: 87.2
   fileName: Data
-  height: 2
+  height: 1.6
 --- !u!4 &621714289
 Transform:
   m_ObjectHideFlags: 0
@@ -1352,7 +1352,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 991479644}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.197, y: 0.4456892, z: -7.56}
+  m_LocalPosition: {x: 0.197, y: 0.4456892, z: -7.337}
   m_LocalScale: {x: 0.16228983, y: 0.029014166, z: 0.08155804}
   m_Children: []
   m_Father: {fileID: 1428686152}
@@ -1882,7 +1882,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437578241}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.27574, y: 1.83, z: -0.28414}
+  m_LocalPosition: {x: 0.26, y: 1.83, z: -0.28414}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children: []
   m_Father: {fileID: 0}
@@ -15398,6 +15398,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VagonFrente
       objectReference: {fileID: 0}
+    - target: {fileID: 5050536981370956124, guid: 704014059674b474180c0131e68cc8d5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7833099017614706983, guid: 704014059674b474180c0131e68cc8d5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15452,6 +15457,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4258095220820493600, guid: 704014059674b474180c0131e68cc8d5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791996009660791992, guid: 704014059674b474180c0131e68cc8d5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4881747739734764622, guid: 704014059674b474180c0131e68cc8d5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2923018785759917661, guid: 704014059674b474180c0131e68cc8d5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 704014059674b474180c0131e68cc8d5, type: 3}

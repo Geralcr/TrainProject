@@ -7,7 +7,7 @@ using System.IO;
 
 public class distance : MonoBehaviour
 {
-
+    #region  Variables
     public Text finish;
 
     public GameObject Router1;
@@ -19,10 +19,6 @@ public class distance : MonoBehaviour
     private Transform transformRouter2;
     private Transform transformRouter3;
     private Transform transformTragetPoint;
-
-    private double distanceRouter1;
-    private double distanceRouter2;
-    private double distanceRouter3;
 
     public int row = 200;
     public int column = 8;
@@ -47,18 +43,10 @@ public class distance : MonoBehaviour
     private string text2 = String.Empty;
     private string text3 = String.Empty;
 
-    private Vector3 direccionRayCastRouter1;
-    private Vector3 direccionRayCastRouter2;
-    private Vector3 direccionRayCastRouter3;
-
     private RaycastHit hit;
 
-    private int EstadoLineaVista;
+    #endregion
 
-    void Start()
-    {
-
-    }
 
     public void EjecutarCalculos()
     {
@@ -87,14 +75,13 @@ public class distance : MonoBehaviour
     {
         for (int i = 0; i < row; i++)
         {
-
             text1 += $"\n";
             text2 += $"\n";
             text3 += $"\n";
 
             for (int j = 0; j < column; j++)
             {
-                transformTragetPoint.position = new Vector3(j * cellWidth + offSetX, height, -i * cellLength - offSetZ);
+                transformTragetPoint.position = new Vector3(j * cellWidth + offSetX, 1.5f + height, -i * cellLength - offSetZ);
                 Instantiate(targetPoint, transformTragetPoint.position, Quaternion.identity);
 
                 text1 += HandleMain(transformTragetPoint.position, transformRouter1.position, i, j);
@@ -113,6 +100,7 @@ public class distance : MonoBehaviour
             LOS = hit.transform.tag == "Target" ? 1 : 0;
         }
         float distance = Vector3.Distance(routerPos, targetPos);
+        
         return CreateString(rowIndex.ToString(), columIndex.ToString(), distance.ToString("N2"), LOS);
     }
 
